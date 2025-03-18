@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
+  Routes,
   Route,
-  Switch,
   Link,
-  useHistory,
+  useNavigate,
 } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
@@ -18,25 +18,24 @@ const App = () => {
       <Router>
         <div className='app'>
           <Nav />
-          <Switch>
+          <Routes>
             <Route
               path='/'
-              exact
-              component={Dashboard}
+              element={<Dashboard />}
             />
             <Route
               path='/login'
-              component={Login}
+              element={<Login />}
             />
             <Route
               path='/signup'
-              component={SignUp}
+              element={<SignUp />}
             />
             <Route
               path='/profiles'
-              component={UserProfile}
+              element={<UserProfile />}
             />
-          </Switch>
+          </Routes>
         </div>
       </Router>
     </UserProvider>
@@ -45,11 +44,11 @@ const App = () => {
 
 const Nav = () => {
   const { user, logout } = useContext(UserContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    history.push('/login');
+    navigate('/login');
   };
 
   return (
@@ -68,11 +67,9 @@ const Nav = () => {
             </li>
           </>
         ) : (
-          <>
-            <li>
-              <Link to='/login'>Login</Link>
-            </li>
-          </>
+          <li>
+            <Link to='/login'>Login</Link>
+          </li>
         )}
       </ul>
     </nav>
