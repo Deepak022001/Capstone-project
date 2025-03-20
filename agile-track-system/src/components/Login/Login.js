@@ -2,39 +2,44 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { login } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:4000/users?email=${email}&password=${password}`
+        `http://localhost:5001/users?email=${email}&password=${password}`
       );
       if (response.data.length > 0) {
         const user = response.data[0];
         login(user);
         if (user.role === 'admin') {
-          history.push('/');
+          navigate('/');
         } else {
-          history.push('/profiles');
+          navigate('/profiles');
         }
       } else {
         alert('Invalid email or password');
       }
     } catch (error) {
       console.error('Error logging in:', error);
+      alert('Login failed. Please try again.');
     }
   };
 
   return (
-    <div>
+    <div className='login-container'>
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={handleLogin}
+        className='login-form'
+      >
         <label>
           Email:
           <input
@@ -55,7 +60,12 @@ const Login = () => {
         </label>
         <button type='submit'>Login</button>
       </form>
-      <button onClick={() => history.push('/signup')}>Sign Up</button>
+      <button
+        onClick={() => navigate('/signup')}
+        className='signup-btn'
+      >
+        Sign Up
+      </button>
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import './App.css';
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,7 +11,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
 import UserProfile from './components/UserProfile/UserProfile';
 import SignUp from './components/Signup/SignUp';
-import { UserProvider, UserContext } from '../src/context/UserContext';
+import { UserProvider, UserContext } from './context/UserContext';
 
 const App = () => {
   return (
@@ -43,7 +44,7 @@ const App = () => {
 };
 
 const Nav = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -52,7 +53,7 @@ const Nav = () => {
   };
 
   return (
-    <nav>
+    <nav className='nav'>
       <ul>
         <li>
           <Link to='/'>Dashboard</Link>
@@ -63,7 +64,12 @@ const Nav = () => {
               <Link to='/profiles'>Profiles</Link>
             </li>
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <button
+                onClick={handleLogout}
+                className='logout-btn'
+              >
+                Logout
+              </button>
             </li>
           </>
         ) : (

@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import { useNavigate } from 'react-router-dom';
+import './SignUp.css';
 
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/users', {
+      await axios.post('http://localhost:5001/users', {
         name,
         email,
         password,
         role: 'employee',
       });
-      history.push('/login');
+      navigate('/login');
     } catch (error) {
       console.error('Error signing up:', error);
+      alert('Sign up failed. Please try again.');
     }
   };
 
   return (
-    <div>
+    <div className='signup-container'>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
+      <form
+        onSubmit={handleSignUp}
+        className='signup-form'
+      >
         <label>
           Name:
           <input
