@@ -55,6 +55,13 @@
       "email": "deepak@gmail.com",
       "password": "deepak123",
       "role": "employee"
+    },
+    {
+      "id": "29d9",
+      "name": "Ketan",
+      "email": "ketan@gmail.com",
+      "password": "ketan123",
+      "role": "employee"
     }
   ],
   "scrums": [
